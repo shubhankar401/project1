@@ -27,16 +27,17 @@ def split_camera_feed():
         right_frame = frame[:, :split_point]
 
         # Display the resulting frames
-        cv2.imshow('Left Frame (80%)', left_frame)
-        cv2.imshow('Right Frame (20%)', right_frame)
+        # cv2.imshow('Left Frame (90%)', left_frame)
+        # cv2.imshow('Right Frame (90%)', right_frame)
 
         # Press 'q' to exit the loop
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
+        return left_frame, right_frame
 
     # When everything is done, release the capture and close windows
     cap.release()
-    cv2.destroyAllWindows()
+    
 
 if __name__ == "__main__":
     split_camera_feed()
