@@ -31,8 +31,8 @@ def split_camera_feed():
         # cv2.imshow('Right Frame (90%)', right_frame)
 
         # Press 'q' to exit the loop
-        # if cv2.waitKey(1) & 0xFF == ord('q'):
-        #     break
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
         return left_frame, right_frame
 
     # When everything is done, release the capture and close windows
