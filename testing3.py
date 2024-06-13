@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 from sort.sort import Sort
-
+import time
 
 # Load YOLO
 net = cv2.dnn.readNet("yolov3.weights", "yolov3.cfg")
@@ -30,6 +30,10 @@ cap = cv2.VideoCapture(0)
 
 # Initialize Sort tracker
 tracker = Sort()
+
+# Initialize variables for FPS calculation
+frame_count = 0
+start_time = time.time()
 
 while cap.isOpened():
     ret, frame = cap.read()
@@ -82,11 +86,18 @@ while cap.isOpened():
         cv2.rectangle(frame, (int(x1), int(y1)), (int(x2), int(y2)), (0, 255, 0), 2)
         cv2.putText(frame, f"ID {int(obj_id)}", (int(x1), int(y1) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
+    # Calculate and display FPS
+    frame_count += 1
+    elapsed_time = time.time() - start_time
+    fps = frame_count / elapsed_time
+    cv2.putText(frame, f"FPS: {round(fps, 2)}", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+
     # Display the resulting frame
     cv2.imshow("Frame", frame)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
+# Release video capture and close all OpenCV windows
 cap.release()
 cv2.destroyAllWindows()
